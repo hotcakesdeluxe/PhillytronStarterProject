@@ -8,6 +8,10 @@ namespace Phillytron
 {
     public class MenuHandler : MonoBehaviour
     {
+        public PlayerInput player1Input;
+        public PlayerInput player2Input;
+        public PlayerInput player3Input;
+        public PlayerInput player4Input;
         public TMP_Text startTitleText;
         public TMP_Text timerText;
         [Header("Player Status Text")]
@@ -15,8 +19,14 @@ namespace Phillytron
         public TMP_Text player2Status;
         public TMP_Text player3Status;
         public TMP_Text player4Status;
+        [Header("Player Leave Text")]
+        public TMP_Text player1Leave;
+        public TMP_Text player2Leave;
+        public TMP_Text player3Leave;
+        public TMP_Text player4Leave;
 
         private float _targetTime = 5f;
+        
         
         // Start is called before the first frame update
         void Start()
@@ -36,6 +46,12 @@ namespace Phillytron
                 int textTime = (int)_targetTime;
                 timerText.text = textTime.ToString();
             }
+            else
+            {
+                startTitleText.text = "";
+                timerText.text = "";
+                _targetTime = 5f;
+            }
             if(_targetTime <= 0)
             {
                 SceneManager.LoadScene("Game");
@@ -46,66 +62,98 @@ namespace Phillytron
         private void PlayerSignIn()
         {
             //sign Player 1 in and out
-            if (Input.GetKeyDown(KeyCode.Period))
+            if (!PhillytronPlayerManager.Instance.player1SignedIn)
             {
-                PhillytronPlayerManager.Instance.player1SignedIn = true;
-                PhillytronPlayerManager.Instance.playerCount++;
-                player1Status.text = "READY!";
-                _targetTime = 5f;
+                if (Input.GetKeyDown(player1Input.blueButton) || 
+                    Input.GetKeyDown(player1Input.purpleButton) || 
+                    Input.GetKeyDown(player1Input.greenButton))
+                {
+                    PhillytronPlayerManager.Instance.player1SignedIn = true;
+                    PhillytronPlayerManager.Instance.playerCount += 1;
+                    player1Status.text = "READY!";
+                    player1Leave.text = "LEAVE";
+                    _targetTime = 5f;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Slash))
+            
+            else if (Input.GetKeyDown(player1Input.purpleButton))
             {
-                PhillytronPlayerManager.Instance.player1SignedIn = false;
-                PhillytronPlayerManager.Instance.playerCount--;
-                player1Status.text = "Press Blue to Join";
+                PhillytronPlayerManager.Instance.playerCount -= 1;
+                player1Status.text = "Press ANY BUTTON to Join";
+                player1Leave.text = "";
                 _targetTime = 5f;
+                PhillytronPlayerManager.Instance.player1SignedIn = false;
             }
             
             //sign Player 2 in and out
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (!PhillytronPlayerManager.Instance.player2SignedIn)
             {
-                PhillytronPlayerManager.Instance.player2SignedIn = true;
-                PhillytronPlayerManager.Instance.playerCount++;
-                player2Status.text = "READY!";
-                _targetTime = 5f;
+                if (Input.GetKeyDown(player2Input.blueButton) || 
+                    Input.GetKeyDown(player2Input.purpleButton) || 
+                    Input.GetKeyDown(player2Input.greenButton))
+                {
+                    PhillytronPlayerManager.Instance.player2SignedIn = true;
+                    PhillytronPlayerManager.Instance.playerCount++;
+                    player2Status.text = "READY!";
+                    player2Leave.text = "LEAVE";
+                    _targetTime = 5f;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            
+            else if (Input.GetKeyDown(player2Input.purpleButton))
             {
                 PhillytronPlayerManager.Instance.player2SignedIn = false;
                 PhillytronPlayerManager.Instance.playerCount--;
-                player2Status.text = "Press Blue to Join";
+                player2Status.text = "Press ANY BUTTON to Join";
+                player2Leave.text = "";
                 _targetTime = 5f;
             }
-            
             //sign Player 3 in and out
-            if (Input.GetKeyDown(KeyCode.G))
+            if (!PhillytronPlayerManager.Instance.player3SignedIn)
             {
-                PhillytronPlayerManager.Instance.player3SignedIn = true;
-                PhillytronPlayerManager.Instance.playerCount++;
-                player3Status.text = "READY!";
-                _targetTime = 5f;
+                 
+                if (Input.GetKeyDown(player3Input.blueButton) || 
+                    Input.GetKeyDown(player3Input.purpleButton) || 
+                    Input.GetKeyDown(player3Input.greenButton))
+                {
+                    PhillytronPlayerManager.Instance.player3SignedIn = true;
+                    PhillytronPlayerManager.Instance.playerCount++;
+                    player3Status.text = "READY!";
+                    player3Leave.text = "LEAVE";
+                    _targetTime = 5f;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.H))
+           
+            else if (Input.GetKeyDown(player3Input.purpleButton))
             {
                 PhillytronPlayerManager.Instance.player3SignedIn = false;
                 PhillytronPlayerManager.Instance.playerCount--;
-                player3Status.text = "Press Blue to Join";
+                player3Status.text = "Press ANY BUTTON to Join";
+                player3Leave.text = "";
                 _targetTime = 5f;
             }
             
             //sign Player 4 in and out
-            if (Input.GetKeyDown(KeyCode.Keypad1))
+            if (!PhillytronPlayerManager.Instance.player4SignedIn)
             {
-                PhillytronPlayerManager.Instance.player4SignedIn = true;
-                PhillytronPlayerManager.Instance.playerCount++;
-                player4Status.text = "READY!";
-                _targetTime = 5f;
+                if (Input.GetKeyDown(player4Input.blueButton) || 
+                    Input.GetKeyDown(player4Input.purpleButton) || 
+                    Input.GetKeyDown(player4Input.greenButton))
+                {
+                    PhillytronPlayerManager.Instance.player4SignedIn = true;
+                    PhillytronPlayerManager.Instance.playerCount++;
+                    player4Status.text = "READY!";
+                    player4Leave.text = "LEAVE";
+                    _targetTime = 5f;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Keypad2))
+            
+            else if (Input.GetKeyDown(player4Input.purpleButton))
             {
                 PhillytronPlayerManager.Instance.player4SignedIn = false;
                 PhillytronPlayerManager.Instance.playerCount--;
-                player4Status.text = "Press Blue to Join";
+                player4Status.text = "Press ANY BUTTON to Join";
+                player4Leave.text = "";
                 _targetTime = 5f;
             }
         }

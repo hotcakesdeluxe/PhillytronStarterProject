@@ -18,6 +18,7 @@ namespace Phillytron
 
         //right on the joystick
         public KeyCode right;
+        
         public KeyCode blueButton;
         public KeyCode purpleButton;
         public KeyCode greenButton;
